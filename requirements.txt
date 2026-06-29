@@ -1,0 +1,24 @@
+# --- Núcleo / Fase 1 local ---
+pandas
+numpy
+pyarrow            # Parquet
+deltalake          # Delta Lake local (delta-rs) sin Spark
+requests           # APIs (clima, GPS, etc.)
+python-dotenv      # cargar credenciales desde .env
+
+# --- Orquestación (plan B local) ---
+schedule           # scheduler simple cada 5 min
+# prefect          # descomentar si se usa Prefect
+
+# --- Fuentes ---
+tweepy             # Twitter API
+faker              # datos sintéticos para el streaming falso
+
+# --- Ciencia de datos / ML ---
+scikit-learn
+jupyter
+matplotlib
+
+# --- Fase 2 nube (instalar en el cluster de Databricks, no localmente) ---
+# pyspark
+# azure-storage-file-datalake

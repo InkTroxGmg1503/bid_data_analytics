@@ -1,0 +1,22 @@
+# --- Credenciales ---
+.env
+*.key
+
+# --- Python ---
+__pycache__/
+*.py[cod]
+venv/
+.venv/
+.ipynb_checkpoints/
+
+# --- Datos del lakehouse (no versionar volumen de datos) ---
+03_lakehouse/bronze/*
+03_lakehouse/silver/*
+03_lakehouse/gold/*
+!03_lakehouse/**/.gitkeep
+07_temp/*
+!07_temp/.gitkeep
+
+# --- Salidas ---
+06_visualizacion/*.pbix
+*.log
