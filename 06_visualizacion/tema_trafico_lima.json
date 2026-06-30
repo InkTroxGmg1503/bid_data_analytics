@@ -1,0 +1,100 @@
+{
+  "name": "Trafico Lima - Smart City",
+  "dataColors": [
+    "#00B4D8",
+    "#1A3C5E",
+    "#2ECC71",
+    "#F1C40F",
+    "#E74C3C",
+    "#7F8C8D",
+    "#9B59B6",
+    "#E67E22"
+  ],
+  "good": "#2ECC71",
+  "neutral": "#F1C40F",
+  "bad": "#E74C3C",
+  "maximum": "#2ECC71",
+  "center": "#F1C40F",
+  "minimum": "#E74C3C",
+  "null": "#BDC3C7",
+  "background": "#F0F4F8",
+  "foreground": "#1A3C5E",
+  "tableAccent": "#00B4D8",
+  "visualStyles": {
+    "*": {
+      "*": {
+        "fontFamily": [{ "value": "Segoe UI" }],
+        "fontSize": [{ "value": 11 }]
+      }
+    },
+    "card": {
+      "*": {
+        "calloutValue": [{
+          "fontSize": [{ "value": 28 }],
+          "fontFamily": [{ "value": "Segoe UI" }],
+          "color": [{ "solid": { "color": "#1A3C5E" } }]
+        }],
+        "label": [{
+          "fontSize": [{ "value": 11 }],
+          "color": [{ "solid": { "color": "#7F8C8D" } }]
+        }],
+        "border": [{
+          "show": true,
+          "color": { "solid": { "color": "#E8EDF2" } },
+          "radius": 6
+        }],
+        "dropShadow": [{
+          "show": true
+        }]
+      }
+    },
+    "lineChart": {
+      "*": {
+        "lineStyles": [{
+          "strokeWidth": 2
+        }]
+      }
+    },
+    "barChart": {
+      "*": {
+        "labels": [{
+          "show": true
+        }]
+      }
+    },
+    "donutChart": {
+      "*": {
+        "legend": [{
+          "show": true,
+          "position": "Right"
+        }]
+      }
+    },
+    "matrix": {
+      "*": {
+        "columnHeaders": [{
+          "fontColor": "#FFFFFF",
+          "backColor": "#1A3C5E",
+          "fontSize": 11
+        }]
+      }
+    },
+    "tableEx": {
+      "*": {
+        "header": [{
+          "fontColor": "#FFFFFF",
+          "backColor": "#1A3C5E",
+          "fontSize": 11
+        }]
+      }
+    },
+    "slicer": {
+      "*": {
+        "data": [{
+          "fontColor": "#2C3E50",
+          "fontSize": 11
+        }]
+      }
+    }
+  }
+}

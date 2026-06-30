@@ -1,0 +1,9 @@
+﻿KPI,Valor,Unidad
+Velocidad promedio (km/h),44.8,km/h
+Congestión global (ratio),0.376,ratio 0-1
+% Nivel ALTO,69.3,%
+% Nivel MEDIO,14.8,%
+% Nivel BAJO,15.9,%
+Zona más congestionada,Costa Verde - Miraflores,texto
+Velocidad mínima zona crítica (km/h),24.9,km/h
+Registros con evento activo,210390,registros

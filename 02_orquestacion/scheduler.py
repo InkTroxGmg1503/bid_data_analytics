@@ -106,6 +106,8 @@ def ejecutar_ciclo(ciclo_num):
     total_ok = sum(1 for _, _, s in resumen if s == "OK")
     log.info(sep)
     log.info(f"  Ciclo #{ciclo_num:03d} completado -- {total_ok}/{len(FUENTES)} fuentes OK")
+
+
     log.info(f"  Proximo ciclo en {INTERVALO_MIN} min")
     log.info(sep)
     return resumen

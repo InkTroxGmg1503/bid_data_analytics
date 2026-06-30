@@ -1,0 +1,49 @@
+﻿zona,KPI,Valor,Unidad
+Av. Brasil - Magdalena,Velocidad promedio (km/h),28.2,km/h
+Av. Brasil - Magdalena,Congestión global (ratio),0.33,ratio
+Av. Brasil - Magdalena,% Nivel ALTO,67.2,%
+Av. Brasil - Magdalena,% Nivel MEDIO,15.8,%
+Av. Brasil - Magdalena,% Nivel BAJO,17.1,%
+Av. Brasil - Magdalena,Nivel dominante,alto,texto
+Av. Brasil - Magdalena,Velocidad mínima (km/h),,km/h
+Av. Brasil - Magdalena,Total vehiculos promedio,37.0,veh
+Carretera Central - Ate,Velocidad promedio (km/h),49.9,km/h
+Carretera Central - Ate,Congestión global (ratio),0.42,ratio
+Carretera Central - Ate,% Nivel ALTO,71.3,%
+Carretera Central - Ate,% Nivel MEDIO,13.9,%
+Carretera Central - Ate,% Nivel BAJO,14.8,%
+Carretera Central - Ate,Nivel dominante,alto,texto
+Carretera Central - Ate,Velocidad mínima (km/h),,km/h
+Carretera Central - Ate,Total vehiculos promedio,80.0,veh
+Costa Verde - Miraflores,Velocidad promedio (km/h),51.7,km/h
+Costa Verde - Miraflores,Congestión global (ratio),0.29,ratio
+Costa Verde - Miraflores,% Nivel ALTO,64.8,%
+Costa Verde - Miraflores,% Nivel MEDIO,16.8,%
+Costa Verde - Miraflores,% Nivel BAJO,18.4,%
+Costa Verde - Miraflores,Nivel dominante,alto,texto
+Costa Verde - Miraflores,Velocidad mínima (km/h),,km/h
+Costa Verde - Miraflores,Total vehiculos promedio,96.0,veh
+Javier Prado - San Isidro,Velocidad promedio (km/h),38.6,km/h
+Javier Prado - San Isidro,Congestión global (ratio),0.4,ratio
+Javier Prado - San Isidro,% Nivel ALTO,70.5,%
+Javier Prado - San Isidro,% Nivel MEDIO,14.2,%
+Javier Prado - San Isidro,% Nivel BAJO,15.3,%
+Javier Prado - San Isidro,Nivel dominante,alto,texto
+Javier Prado - San Isidro,Velocidad mínima (km/h),,km/h
+Javier Prado - San Isidro,Total vehiculos promedio,64.0,veh
+Panamericana Norte - Independencia,Velocidad promedio (km/h),53.9,km/h
+Panamericana Norte - Independencia,Congestión global (ratio),0.36,ratio
+Panamericana Norte - Independencia,% Nivel ALTO,69.0,%
+Panamericana Norte - Independencia,% Nivel MEDIO,14.9,%
+Panamericana Norte - Independencia,% Nivel BAJO,16.1,%
+Panamericana Norte - Independencia,Nivel dominante,alto,texto
+Panamericana Norte - Independencia,Velocidad mínima (km/h),24.9,km/h
+Panamericana Norte - Independencia,Total vehiculos promedio,80.0,veh
+Via Expresa - Centro,Velocidad promedio (km/h),46.7,km/h
+Via Expresa - Centro,Congestión global (ratio),0.46,ratio
+Via Expresa - Centro,% Nivel ALTO,72.9,%
+Via Expresa - Centro,% Nivel MEDIO,13.4,%
+Via Expresa - Centro,% Nivel BAJO,13.7,%
+Via Expresa - Centro,Nivel dominante,alto,texto
+Via Expresa - Centro,Velocidad mínima (km/h),,km/h
+Via Expresa - Centro,Total vehiculos promedio,91.0,veh

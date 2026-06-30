@@ -1,0 +1,7 @@
+﻿zona,velocidad_kmh,congestion_ratio,intensidad_veh_hora,total_vehiculos,pct_alto,pct_medio,pct_bajo,registros,lat,lon,nivel_dominante
+Av. Brasil - Magdalena,28.23,0.33,137.56,37.36,67.15,15.76,17.09,140224,-12.09,-77.06,alto
+Carretera Central - Ate,49.91,0.42,376.21,80.14,71.3,13.9,14.8,140214,-12.03,-76.92,alto
+Costa Verde - Miraflores,51.66,0.29,313.94,96.17,64.77,16.83,18.4,140259,-12.13,-77.03,alto
+Javier Prado - San Isidro,38.56,0.4,286.31,64.06,70.46,14.24,15.29,140138,-12.092,-77.022,alto
+Panamericana Norte - Independencia,53.88,0.36,326.28,80.14,69.05,14.86,16.1,140252,-11.99,-77.06,alto
+Via Expresa - Centro,46.72,0.46,472.12,90.75,72.89,13.39,13.72,140137,-12.071,-77.033,alto

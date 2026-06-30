@@ -24,9 +24,9 @@ import adlfs
 from datetime import datetime, timezone
 
 # --- Credenciales ADLS ---
-# Pega aquí tu clave de acceso de Azure Storage (la del .env)
+# Pega aquí tu clave de acceso de Azure Storage (la encontrarás en el .env local)
 ADLS_ACCOUNT   = "traficolima"
-ADLS_KEY       = ""          # <-- pega tu ADLS_KEY aquí
+ADLS_KEY       = ""          # <-- pega tu ADLS_KEY aquí (ver .env local)
 ADLS_CONTAINER = "trafico-lima"
 
 SO = {"account_name": ADLS_ACCOUNT, "account_key": ADLS_KEY}
@@ -40,14 +40,20 @@ print(f"Conectado a: {ADLS_ACCOUNT} / {ADLS_CONTAINER}")
 
 def leer_bronze(fuente):
     """Lee todos los Parquet de una fuente desde bronze, retorna DataFrame."""
+    import pyarrow.dataset as ds
     fs = adlfs.AzureBlobFileSystem(**SO)
     patron = f"{ADLS_CONTAINER}/bronze/{fuente}/**/*.parquet"
     archivos = fs.glob(patron)
     if not archivos:
         print(f"  [!] {fuente}: sin archivos en bronze todavía")
         return pd.DataFrame()
-    dfs = [pd.read_parquet(f"abfs://{a}", storage_options=SO) for a in archivos]
-    df = pd.concat(dfs, ignore_index=True)
+    # pyarrow.dataset resuelve automáticamente conflictos de schema entre archivos
+    dataset = ds.dataset(archivos, filesystem=fs, format="parquet")
+    df = dataset.to_table().to_pandas()
+    # Normaliza _ingest_ts a string ISO sin microsegundos (mezcla histórico + real)
+    if "_ingest_ts" in df.columns:
+        df["_ingest_ts"] = (pd.to_datetime(df["_ingest_ts"], format="mixed", utc=True)
+                              .dt.strftime("%Y-%m-%dT%H:%M:%S+00:00"))
     print(f"  {fuente}: {len(df)} registros bronze leídos ({len(archivos)} archivos)")
     return df
 
@@ -111,16 +117,15 @@ print("\n[2/6] Sensores de tráfico")
 
 df = leer_bronze("sensores_trafico")
 if not df.empty:
-    df_s = (df
-        .dropna(subset=["congestion_ratio", "zona"])
-        .drop_duplicates(subset=["zona", "_ingest_ts"])
+    df_s = df.dropna(subset=["congestion_ratio", "zona"]).drop_duplicates(subset=["zona", "_ingest_ts"])
+    for c in ["intensidad_veh_hora", "capacidad_veh_hora", "sensores_activos"]:
+        if c in df_s.columns:
+            df_s[c] = pd.to_numeric(df_s[c], errors="coerce").round().astype("Int32")
+    df_s = (df_s
         .astype({
-            "congestion_ratio":      "float32",
-            "intensidad_veh_hora":   "Int32",
-            "capacidad_veh_hora":    "Int32",
-            "ocupacion_pct":         "float32",
-            "carga_pct":             "float32",
-            "sensores_activos":      "Int8",
+            "congestion_ratio": "float32",
+            "ocupacion_pct":    "float32",
+            "carga_pct":        "float32",
         })
         .query("0 <= congestion_ratio <= 1")
         .sort_values(["zona", "_ingest_ts"])
@@ -136,15 +141,14 @@ print("\n[3/6] GPS / Rutas")
 
 df = leer_bronze("gps_rutas")
 if not df.empty:
-    df_s = (df
-        .dropna(subset=["velocidad_kmh", "congestion_factor", "zona"])
-        .drop_duplicates(subset=["zona", "_ingest_ts"])
+    df_s = df.dropna(subset=["velocidad_kmh", "congestion_factor", "zona"]).drop_duplicates(subset=["zona", "_ingest_ts"])
+    for c in ["distancia_m", "duracion_libre_s", "duracion_trafico_s"]:
+        if c in df_s.columns:
+            df_s[c] = pd.to_numeric(df_s[c], errors="coerce").round().astype("Int32")
+    df_s = (df_s
         .astype({
-            "velocidad_kmh":      "float32",
-            "congestion_factor":  "float32",
-            "distancia_m":        "Int32",
-            "duracion_libre_s":   "Int32",
-            "duracion_trafico_s": "Int32",
+            "velocidad_kmh":     "float32",
+            "congestion_factor": "float32",
         })
         .query("1 <= velocidad_kmh <= 130 and 1.0 <= congestion_factor <= 5.0")
         .sort_values(["zona", "_ingest_ts"])
@@ -181,13 +185,11 @@ print("\n[5/6] Eventos")
 
 df = leer_bronze("eventos")
 if not df.empty:
-    df_s = (df
-        .dropna(subset=["nombre", "fecha", "impacto_factor"])
-        .drop_duplicates(subset=["nombre", "fecha"])
-        .astype({
-            "impacto_factor":    "float32",
-            "dias_para_evento":  "Int16",
-        })
+    df_s = df.dropna(subset=["nombre", "fecha", "impacto_factor"]).drop_duplicates(subset=["nombre", "fecha"])
+    if "dias_para_evento" in df_s.columns:
+        df_s["dias_para_evento"] = pd.to_numeric(df_s["dias_para_evento"], errors="coerce").round().astype("Int16")
+    df_s = (df_s
+        .astype({"impacto_factor": "float32"})
         .query("1.0 <= impacto_factor <= 2.0")
         .sort_values(["fecha", "nombre"])
         .reset_index(drop=True)

@@ -19,7 +19,7 @@ import adlfs
 from datetime import datetime, timezone
 
 ADLS_ACCOUNT   = "traficolima"
-ADLS_KEY       = ""          # <-- pega tu ADLS_KEY aquí
+ADLS_KEY       = ""          # <-- pega tu ADLS_KEY aquí (ver .env local)
 ADLS_CONTAINER = "trafico-lima"
 SO = {"account_name": ADLS_ACCOUNT, "account_key": ADLS_KEY}
 

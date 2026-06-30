@@ -1,0 +1,161 @@
+================================================
+  MEDIDAS DAX — Dashboard Tráfico Lima
+  Copiar y pegar en Power BI Desktop:
+  Inicio > Nueva medida (en la tabla correspondiente)
+================================================
+
+-- ============================================================
+-- TABLA: kpi_resumen
+-- ============================================================
+
+Velocidad Media =
+CALCULATE(
+    VALUE(SELECTEDVALUE(kpi_resumen[Valor])),
+    kpi_resumen[KPI] = "Velocidad promedio (km/h)"
+)
+
+Congestion Ratio =
+CALCULATE(
+    VALUE(SELECTEDVALUE(kpi_resumen[Valor])),
+    kpi_resumen[KPI] = "Congestión global (ratio)"
+)
+
+Pct Alto =
+CALCULATE(
+    VALUE(SELECTEDVALUE(kpi_resumen[Valor])),
+    kpi_resumen[KPI] = "% Nivel ALTO"
+)
+
+Zona Critica =
+CALCULATE(
+    SELECTEDVALUE(kpi_resumen[Valor]),
+    kpi_resumen[KPI] = "Zona más congestionada"
+)
+
+-- Semáforo de congestión (para formato condicional)
+Semaforo Congestion =
+SWITCH(
+    TRUE(),
+    [Congestion Ratio] < 0.40, "FLUIDO",
+    [Congestion Ratio] < 0.65, "MODERADO",
+    "CRÍTICO"
+)
+
+-- Color HEX para formato condicional (Valor de campo)
+Color Congestion =
+SWITCH(
+    [Semaforo Congestion],
+    "FLUIDO",   "#2ECC71",
+    "MODERADO", "#F1C40F",
+    "#E74C3C"
+)
+
+-- Ícono semáforo (círculo unicode)
+Icono Semaforo =
+SWITCH(
+    [Semaforo Congestion],
+    "FLUIDO",   UNICHAR(9679) & " FLUIDO",
+    "MODERADO", UNICHAR(9679) & " MODERADO",
+    UNICHAR(9679) & " CRÍTICO"
+)
+
+
+-- ============================================================
+-- TABLA: kpi_serie_temporal
+-- ============================================================
+
+Velocidad Actual =
+CALCULATE(
+    AVERAGE(kpi_serie_temporal[velocidad_kmh]),
+    kpi_serie_temporal[hora] = MAX(kpi_serie_temporal[hora])
+)
+
+Velocidad Hora Anterior =
+CALCULATE(
+    AVERAGE(kpi_serie_temporal[velocidad_kmh]),
+    kpi_serie_temporal[hora] = MAX(kpi_serie_temporal[hora]) - 1
+)
+
+Variacion Velocidad % =
+VAR vActual   = [Velocidad Actual]
+VAR vAnterior = [Velocidad Hora Anterior]
+RETURN
+DIVIDE(vActual - vAnterior, vAnterior, 0)
+
+Hora Pico =
+CALCULATE(
+    MAX(kpi_serie_temporal[hora_label]),
+    TOPN(
+        1,
+        kpi_serie_temporal,
+        kpi_serie_temporal[congestion_ratio],
+        DESC
+    )
+)
+
+Congestion En Hora Pico =
+CALCULATE(
+    MAX(kpi_serie_temporal[congestion_ratio]),
+    kpi_serie_temporal[es_hora_punta] = 1
+)
+
+Velocidad En Hora Valle =
+CALCULATE(
+    MAX(kpi_serie_temporal[velocidad_kmh]),
+    kpi_serie_temporal[es_hora_punta] = 0
+)
+
+
+-- ============================================================
+-- TABLA: kpi_por_zona
+-- ============================================================
+
+Zona Mas Congestionada =
+CALCULATE(
+    SELECTEDVALUE(kpi_por_zona[zona]),
+    TOPN(1, kpi_por_zona, kpi_por_zona[congestion_ratio], DESC)
+)
+
+Top 3 Zonas =
+CONCATENATEX(
+    TOPN(3, kpi_por_zona, kpi_por_zona[congestion_ratio], DESC),
+    kpi_por_zona[zona],
+    ", ",
+    kpi_por_zona[congestion_ratio],
+    DESC
+)
+
+-- Color semáforo por zona (usar en formato condicional de tabla)
+Color Zona =
+SWITCH(
+    TRUE(),
+    SELECTEDVALUE(kpi_por_zona[nivel_dominante]) = "alto",    "#E74C3C",
+    SELECTEDVALUE(kpi_por_zona[nivel_dominante]) = "medio",   "#F1C40F",
+    "#2ECC71"
+)
+
+
+-- ============================================================
+-- TABLA: kpi_ml_resultados
+-- ============================================================
+
+Mejor Modelo =
+CALCULATE(
+    SELECTEDVALUE(kpi_ml_resultados[Modelo]),
+    kpi_ml_resultados[es_mejor] = 1
+)
+
+Mejor F1 =
+CALCULATE(
+    MAX(kpi_ml_resultados[F1_score]),
+    kpi_ml_resultados[es_mejor] = 1
+)
+
+-- Color rendimiento ML (formato condicional en tabla)
+Color ML =
+SWITCH(
+    TRUE(),
+    SELECTEDVALUE(kpi_ml_resultados[F1_score]) >= 0.88, "#2ECC71",
+    SELECTEDVALUE(kpi_ml_resultados[F1_score]) >= 0.85, "#F1C40F",
+    "#E74C3C"
+)

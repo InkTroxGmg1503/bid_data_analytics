@@ -1,0 +1,44 @@
+{
+  "labels_target": [
+    "alto",
+    "bajo",
+    "medio"
+  ],
+  "cols_num_sel": [
+    "pct_camion_hgv",
+    "pct_moto_mototaxi",
+    "pct_combi_minibus",
+    "hora_sin",
+    "codigo_clima",
+    "dia_semana",
+    "indice_congestion_lag1h",
+    "es_fin_de_semana",
+    "hora_cos",
+    "congestion_ratio",
+    "pct_transporte_publico",
+    "es_hora_punta",
+    "pct_bus",
+    "hora",
+    "velocidad_kmh",
+    "humedad_pct",
+    "pct_camioneta_lgv",
+    "pct_auto_taxi",
+    "intensidad_veh_hora",
+    "velocidad_relativa",
+    "vehiculos_salida"
+  ],
+  "cols_cat_sel": [
+    "zona",
+    "nivel_servicio",
+    "periodo_dia"
+  ],
+  "excluir": [
+    "congestion_factor",
+    "indice_congestion",
+    "tendencia_congestion",
+    "duracion_trafico_s",
+    "fecha"
+  ],
+  "n_input": 39,
+  "target": "nivel_congestion"
+}
